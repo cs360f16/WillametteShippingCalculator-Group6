@@ -16,6 +16,15 @@ class SaleItem:
 	runningItemID = [1]
 	
 	def __init__ (self, listDetails) :
+		""" An item for sale
+		
+		Each item contains:
+		cost
+		weight
+		title
+		freeshipping (true or false)
+		item id 
+		"""
 	
 		self._cost = listDetails[0]
 		self._weight = listDetails[1]
