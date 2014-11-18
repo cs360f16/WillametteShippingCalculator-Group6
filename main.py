@@ -9,6 +9,10 @@
 # Purpose:		Simulate an online store
 ################################
 
+import itemStore
+import basket
+import shippingLogic
+
 
 # read items into the itemStore
 # display menu
