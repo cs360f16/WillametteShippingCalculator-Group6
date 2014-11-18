@@ -8,3 +8,34 @@
 # Assignment:	Lecture Examples
 # Purpose:		The shipping calculator
 ################################
+
+class ShippingLogic:
+  
+  def __init__(self):
+    self._rate=[]
+    self._rate.append( ( .1, 1, 5) )
+    self._rate.append( ( 1.1, 5, 7) )
+    self._rate.append( ( 5, None, 10) )
+    
+  
+  def calcWeightForCost(self, basket):
+    self._weight = 0
+    
+    for item in basket.items():
+      if not item[1].getFreeShipping() :
+        self._weight += (item[0] * int(item[1].getWeight()))
+        
+    return self._weight
+
+
+  def calcCostForShippingByWeight(self, weight):
+    
+    self._cost = 0
+    
+    if weight <= 100 :
+      for rate in self._rate :
+        if weight >= rate[0] and (rate[1] is None or weight < rate[1]) :
+          self._cost = rate[2]
+          return self._cost
+
+    return self._cost

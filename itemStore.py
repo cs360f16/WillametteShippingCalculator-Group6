@@ -10,9 +10,9 @@
 ################################
 
 import csv
-import SaleItem
+from SaleItem import SaleItem
 
-class itemStore :
+class ItemStore :
 	
 	def __init__ (self, filename) :
 		""" construct item store and read data from a csv file
@@ -27,15 +27,16 @@ class itemStore :
 			
 			# read each row
 			for dataRow in csvReader :
-				
-				# put the data into the list as a SaleItem
-				self._inventory.append(SaleItem(dataRow))
+				if len(dataRow) > 0 :
+					# put the data into the list as a SaleItem
+					self._inventory.append(SaleItem(dataRow))
 		
 	def items(self):
 		""" generator for accessing items in inventory
 		"""
-		
 		for dataRow in self._inventory:
 			yield dataRow
 
+	def getItem(self, index):
+		return self._inventory[index]
 	
