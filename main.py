@@ -11,7 +11,7 @@
 
 from itemStore import ItemStore
 from basket import Basket
-from ShippingLogic import ShippingLogic
+from ShippingLogic import *
 
 
 def displayItems(theStore):
@@ -57,8 +57,10 @@ def main():
   printBasket(basket)
   
   total = basket.getTotalShipping(ShippingLogic())
-  
   print(total)
+  total = basket.getTotalShipping(SaleShippingLogic())
+  print(total)
+  
   
 # invoke main()
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ class ShippingLogic:
     self._rate.append( ( .1, 1, 5) )
     self._rate.append( ( 1.1, 5, 7) )
     self._rate.append( ( 5, None, 10) )
-    
+    self._FREE_SHIPPING_WEIGHT = 100
   
   def calcWeightForCost(self, basket):
     self._weight = 0
@@ -32,10 +32,20 @@ class ShippingLogic:
     
     self._cost = 0
     
-    if weight <= 100 :
+    if weight <= self._FREE_SHIPPING_WEIGHT:
       for rate in self._rate :
         if weight >= rate[0] and (rate[1] is None or weight < rate[1]) :
           self._cost = rate[2]
           return self._cost
 
     return self._cost
+
+class SaleShippingLogic(ShippingLogic):
+  
+  def __init__(self):
+    self._rate=[]
+    self._rate.append( ( .1, 1, 3) )
+    self._rate.append( ( 1.1, 5, 4) )
+    self._rate.append( ( 5, None, 6) )
+    self._FREE_SHIPPING_WEIGHT = 50
+
