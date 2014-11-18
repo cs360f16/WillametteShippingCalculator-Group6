@@ -37,11 +37,9 @@ class ItemStore :
 		for dataRow in self._inventory:
 			yield dataRow
 
-	def getItem(self, index):
-		return self._inventory[index]
-		
 	def getItemById(self, itemID):
-		
+		""" get an item by itemID
+		"""
 		for dataRow in self._inventory:
 			if dataRow.getID() == itemID:
 				return dataRow

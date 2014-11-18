@@ -18,6 +18,9 @@ import getopt
 # python3 main.py --file dataFiles/normalSales.csv [--shipping (normal|sale)]
 
 def displayItems(theStore):
+	""" display all the items in the store
+	"""
+	
 	print('\n')
 	print(str(0).rjust(3) + '.' + ' Display Basket'.ljust(25))
 	for item in theStore.items():
@@ -31,11 +34,21 @@ def displayItems(theStore):
 	print('\n')
 	
 def addItem(theStore, basket, itemID, qty):
+	""" add an item
+	
+	If that item is already in the basket, the requested
+	quantity (qty) is added to the existing quantity
+	"""
 	basket.addItem( [qty, theStore.getItemById(itemID)])
 
 	
 def printBasket(basket):
-
+	""" display contents of the basket
+	
+	Also display the total weight, total charged weight (disregarding
+	items with free shipping)
+	"""
+	
 	totalWeight = 0	
 	totalChargedWeight = 0
 	print('\n=====Basket=====')
@@ -84,9 +97,14 @@ def main(filename, shippingLogic):
 	total = basket.getTotalShipping(shippingLogic)
 	print(shippingLogic.getName() +' Shipping cost: '+ str(total))
 
+
+
 def usage():
 	print('python3 main.py --file dataFiles/normalSales.csv [--shipping (normal|sale)]')
 	print('')
+
+
+
 	
 # invoke main()
 if __name__ == "__main__":

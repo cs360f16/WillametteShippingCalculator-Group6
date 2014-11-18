@@ -32,6 +32,9 @@ class ShippingLogic:
 	
 	
 	def calcWeightForCost(self, basket):
+		""" determine the total chargable weight of the items in the basket
+		"""
+		
 		weight = 0
 		
 		for item in basket.items():
@@ -42,6 +45,8 @@ class ShippingLogic:
 
 
 	def calcCostForShippingByWeight(self, weight):
+		""" determine the total cost of shipping the given weight
+		"""
 		
 		cost = 0
 		
@@ -53,6 +58,8 @@ class ShippingLogic:
 		return cost
 
 	def getName(self):
+		""" the name of the shipping prices
+		"""
 		return 'Standard'
 
 class SaleShippingLogic(ShippingLogic):
@@ -68,4 +75,6 @@ class SaleShippingLogic(ShippingLogic):
 		self._FREE_SHIPPING_WEIGHT = 50
 
 	def getName(self):
+		""" the name of the shipping prices
+		"""
 		return 'Sale'
