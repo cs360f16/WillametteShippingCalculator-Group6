@@ -39,4 +39,11 @@ class ItemStore :
 
 	def getItem(self, index):
 		return self._inventory[index]
-	
+		
+	def getItemById(self, itemID):
+		
+		for dataRow in self._inventory:
+			if dataRow.getID() == itemID:
+				return dataRow
+		
+		return None

@@ -12,13 +12,15 @@
 from itemStore import ItemStore
 from basket import Basket
 from ShippingLogic import *
+import sys
 
 
 def displayItems(theStore):
   counter = 1
-  
+  print('\n')
+  print(str(0).rjust(3) + '.' + ' Display Basket'.ljust(25))
   for item in theStore.items():
-    print(str(counter).rjust(3) + '.' + item.getTitle().ljust(25)+ '\t'+
+    print(str(item.getID()).rjust(3) + '.' + item.getTitle().ljust(25)+ '\t'+
     '\t' + "${:.2f}".format(int(item.getCost())).rjust(7) + 
      '\t'+item.getWeight().rjust(5), end='')
     if item.getFreeShipping() :
@@ -26,17 +28,29 @@ def displayItems(theStore):
     else:
       print('')
     counter += 1
-
-def addItem(theStore, basket, choice, qty):
+  print('\n')
   
-  basket.addItem( [qty, theStore.getItem(choice)])
+def addItem(theStore, basket, itemID, qty):
+  basket.addItem( [qty, theStore.getItemById(itemID)])
+
   
 def printBasket(basket):
-  
+
+  totalWeight = 0  
+  totalChargedWeight = 0
+  print('\n=====Basket=====')
   for item in basket.items():
     print('Quantity: ' + str(item[0]) + ' ' +item[1].getTitle() 
-      + ' Total Cost: ' + "${:.2f}".format(int(item[1].getCost()) * item[0]))
-    
+      + ' Total Cost: ' + "${:.2f}".format(int(item[1].getCost()) * item[0]) 
+      + ' Weight: ' + str(item[0]* int(item[1].getWeight())))
+    totalWeight += item[0]* int(item[1].getWeight())
+    if item[1].getFreeShipping() is False :
+      totalChargedWeight += (item[0]* int(item[1].getWeight()))
+
+  print('\nTotal Weight: ' + str(totalWeight))
+  print('Total Charged Weight: ' + str(totalChargedWeight))
+  print('================\n')
+  
 def main():
   # read items into the itemStore
   # display menu
@@ -44,24 +58,34 @@ def main():
   # repeat to display
   # calculate shipping
 
-  theStore = ItemStore('dataFiles/normalSales.csv')
+  
+  theStore = ItemStore(sys.argv[1])
   basket = Basket()
   
-  displayItems(theStore)
-  choice = int(input('Select item (-1 to quit)'))
+  choice = 0
   
-  qty = int(input('Quantity:'))
+  while choice != -1 :
   
-  addItem(theStore, basket, choice-1, qty)
+    displayItems(theStore)
+    choice = int(input('Select item (-1 to quit) '))
+  
+    if choice == 0:
+      printBasket(basket)
+      total = basket.getTotalShipping(ShippingLogic())
+      print('Estimated Shipping cost: '+ str(total))
+      
+    elif choice != -1:
+      qty = int(input('Quantity: '))
+  
+      addItem(theStore, basket, choice, qty)
   
   printBasket(basket)
   
   total = basket.getTotalShipping(ShippingLogic())
-  print(total)
+  print('Normal Shipping cost: '+ str(total))
   total = basket.getTotalShipping(SaleShippingLogic())
-  print(total)
-  
-  
+  print('Sale Shipping cost: '+ str(total))
+
 # invoke main()
 if __name__ == "__main__":
   main()

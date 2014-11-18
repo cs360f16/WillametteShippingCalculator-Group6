@@ -11,7 +11,12 @@
 
 class SaleItem:
 	
+	# this is a list because we need a mutable object to be shared
+	# among all instances of SaleItem
+	runningItemID = [1]
+	
 	def __init__ (self, listDetails) :
+	
 		self._cost = listDetails[0]
 		self._weight = listDetails[1]
 		self._title = listDetails[2]
@@ -19,6 +24,9 @@ class SaleItem:
 		
 		if len(listDetails) == 4 :
 			self._freeShipping = True
+			
+		self._itemID = self.runningItemID[0]
+		self.runningItemID[0] += 1
 			
 
 	def getCost(self):
@@ -33,8 +41,11 @@ class SaleItem:
 	def getFreeShipping(self):
 		return self._freeShipping
 		
-	def getDetails(self):
+	def getDetailsAsString(self):
 		return self._title + ' $' +str(self._cost)
+		
+	def getID(self):
+		return self._itemID
 		
 		
 		
