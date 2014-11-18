@@ -31,8 +31,6 @@ class itemStore :
 				# put the data into the list as a SaleItem
 				self._inventory.append(SaleItem(dataRow))
 		
-		
-				
 	def items(self):
 		""" generator for accessing items in inventory
 		"""
