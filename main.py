@@ -13,10 +13,11 @@ from itemStore import ItemStore
 from basket import Basket
 from ShippingLogic import *
 import sys
+import getopt
 
+# python3 main.py --file dataFiles/normalSales.csv [--shipping (normal|sale)]
 
 def displayItems(theStore):
-	counter = 1
 	print('\n')
 	print(str(0).rjust(3) + '.' + ' Display Basket'.ljust(25))
 	for item in theStore.items():
@@ -27,7 +28,6 @@ def displayItems(theStore):
 			print(' Free Shipping!')
 		else:
 			print('')
-		counter += 1
 	print('\n')
 	
 def addItem(theStore, basket, itemID, qty):
@@ -51,7 +51,7 @@ def printBasket(basket):
 	print('Total Charged Weight: ' + str(totalChargedWeight))
 	print('================\n')
 	
-def main():
+def main(filename, shippingLogic):
 	# read items into the itemStore
 	# display menu
 	# add item to basket in given quantity
@@ -59,7 +59,7 @@ def main():
 	# calculate shipping
 
 	
-	theStore = ItemStore(sys.argv[1])
+	theStore = ItemStore(filename)
 	basket = Basket()
 	
 	choice = 0
@@ -71,7 +71,7 @@ def main():
 	
 		if choice == 0:
 			printBasket(basket)
-			total = basket.getTotalShipping(ShippingLogic())
+			total = basket.getTotalShipping(shippingLogic)
 			print('Estimated Shipping cost: '+ str(total))
 			
 		elif choice != -1:
@@ -81,11 +81,36 @@ def main():
 	
 	printBasket(basket)
 	
-	total = basket.getTotalShipping(ShippingLogic())
-	print('Normal Shipping cost: '+ str(total))
-	total = basket.getTotalShipping(SaleShippingLogic())
-	print('Sale Shipping cost: '+ str(total))
+	total = basket.getTotalShipping(shippingLogic)
+	print(shippingLogic.getName() +' Shipping cost: '+ str(total))
 
+def usage():
+	print('python3 main.py --file dataFiles/normalSales.csv [--shipping (normal|sale)]')
+	print('')
+	
 # invoke main()
 if __name__ == "__main__":
-	main()
+
+	shippingLogic = ShippingLogic()
+	filename = 'dataFiles/normalSales.csv'
+	
+	try:
+		optlist, args = getopt.getopt(sys.argv[1:],'' , ['help', 'file=', 'shipping='])
+		
+		for option, arg in optlist:
+			if option == '--file':
+				filename = arg
+			elif option == '--shipping':
+				if arg == 'sale':
+					shippingLogic = SaleShippingLogic()
+			elif option == '--help':
+				usage()
+				sys.exit(0)
+				
+	except getopt.GetoptError as err:
+		print('Option error!')
+		usage()
+		sys.exit(1)
+		
+	
+	main(filename, shippingLogic)

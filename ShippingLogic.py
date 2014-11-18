@@ -52,7 +52,8 @@ class ShippingLogic:
 
 		return cost
 
-
+	def getName(self):
+		return 'Standard'
 
 class SaleShippingLogic(ShippingLogic):
 	""" Shipping prices for our Holiday Sale!
@@ -66,3 +67,5 @@ class SaleShippingLogic(ShippingLogic):
 		self._rate.append( ( 6, None, 7) )
 		self._FREE_SHIPPING_WEIGHT = 50
 
+	def getName(self):
+		return 'Sale'
