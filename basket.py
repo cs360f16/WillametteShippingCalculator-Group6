@@ -14,11 +14,14 @@ class Basket:
 	"""
 	
 	def __init__(self):
-		""" the basket starts empty """
+		""" the basket starts empty 
+		
+		The basket contains a list of (qty, SaleItem) tuples
+		"""
 		self._items = []
 		
 	def addItem(self, item):
-		""" add an item
+		""" add an item (qty, SaleItem)
 		
 		If the item already exists, add the specified quantity
 		of the item to the existing entry in the basket
@@ -59,7 +62,7 @@ class Basket:
 		found = False
 		for item in self._items:
 			if item[1].getID() == itemID:
-				item[0] += qty
+				item[0] = qty
 				found = True
 					
 		return found
