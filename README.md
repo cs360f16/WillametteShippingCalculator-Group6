@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/cs360f16
-/WillametteShippingCalculator-Group6.svg)](https://travis-ci.org/cs360f16
+[![Build Status](https://travis-ci.org/cs360f16/WillametteShippingCalculator-Group6.svg)](https://travis-ci.org/cs360f16
 /WillametteShippingCalculator-Group6
 )
 
