@@ -5,4 +5,4 @@ python:
 install:
 - pip install simplejson
 script:
-- python -m unittest unittestExample -v
+- python -m unittest test_SaleItemUnitTest.py -v
